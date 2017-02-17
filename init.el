@@ -37,18 +37,43 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ;; auto-completion
-     ;; better-defaults
+     auto-completion
+     better-defaults
      emacs-lisp
-     ;; git
-     ;; markdown
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     git
+     markdown
+     org
+     csv
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     syntax-checking
+     version-control
+     (clojure :variables clojure-enable-fancify-symbols t)
+     colors
+     plantuml
+     common-lisp
+     html
+     shell
+     javascript
+     php
+     plantuml
+     yaml
+     react
+     graphviz
+     ;; ===============
+     ;; my layers
+     ;; ===============
+     ;; meghanada
+     ;; zh-font-fix
+     orgmine
+     maxima
+     ledger
+     pangu-spacing
+
+     ;; keybindings
+     my-keybinding
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -290,7 +315,15 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  )
+
+  (when (eq system-type 'darwin)
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'super))
+
+  (with-eval-after-load 'org
+    (mapc 'load
+          (file-expand-wildcards
+           (concat dotspacemacs-directory "private/*.el")))))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
