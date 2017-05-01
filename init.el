@@ -3,6 +3,7 @@
 ;; It must be stored in your home directory.
 
 (defun dotspacemacs/layers ()
+
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
 values."
@@ -31,6 +32,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     vimscript
+     sql
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -52,7 +55,6 @@ values."
      version-control
      (clojure :variables clojure-enable-fancify-symbols t)
      colors
-     plantuml
      common-lisp
      html
      shell
@@ -62,18 +64,20 @@ values."
      yaml
      react
      graphviz
+     deft
+     finance
      ;; ===============
      ;; my layers
      ;; ===============
-     ;; meghanada
-     ;; zh-font-fix
      orgmine
      maxima
-     ledger
      pangu-spacing
-
-     ;; keybindings
+     mode-icons
+     new-alert
      my-keybinding
+     sx
+     hyp-org
+     hexo
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -158,7 +162,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -216,10 +220,10 @@ values."
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize nil
+   dotspacemacs-helm-resize 1
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header nil
+   dotspacemacs-helm-no-header 1
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
    dotspacemacs-helm-position 'bottom
@@ -305,7 +309,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -316,10 +320,13 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
+  ;; zsh (oh-my-zsh) too slow
+  (setenv "SHELL" "/bin/bash")
+  (setq ns-use-srgb-colorspace nil)
+
   (when (eq system-type 'darwin)
     (setq mac-command-modifier 'meta)
     (setq mac-option-modifier 'super))
-
   (with-eval-after-load 'org
     (mapc 'load
           (file-expand-wildcards
