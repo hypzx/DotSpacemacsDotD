@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: prefile
+# key: prefile_
+# --
+#+TITLE: ${1:title}
+#+AUTHOR: ${2:hyp}
+#+EMAIL: ${3:hyp@gmail.com}
+#+DESCRIPTION: ${4:description}
+#+STARTUP: ${5:content}
+$0
